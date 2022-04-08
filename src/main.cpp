@@ -87,8 +87,10 @@ void loop()
 
     if (Serial2.available())
     {
-        String test = Serial2.readString();
-        Serial.println(test);
+        int in = Serial2.readString().toInt();
+        int pos = in / 1000; // get first 3 digits
+        int throttle = in - pos * 1000 ; // get last 3 digits
+        Serial.println(String(pos) + ", " + String(throttle));
     }
 
     // if (Serial2 > 0)
