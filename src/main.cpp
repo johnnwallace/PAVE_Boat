@@ -77,21 +77,23 @@ void loop()
     static int pos = 0;
     encoder.tick();
 
-    int newPos = encoder.getPosition();
-    if (pos != newPos)
-    {
+    // int newPos = encoder.getPosition();
+    // if (pos != newPos)
+    // {
 
-        // Serial.println(newPos);
-        pos = newPos;
-    }
+    //     // Serial.println(newPos);
+    //     pos = newPos;
+    // }
 
     if (Serial2.available())
     {
         int in = Serial2.readString().toInt();
-        int pos = in / 1000; // get first 3 digits
-        int throttle = in - pos * 1000 ; // get last 3 digits
+        int pos = in / 1000;            // get first 3 digits
+        int throttle = in - pos * 1000; // get last 3 digits
         Serial.println(String(pos) + ", " + String(throttle));
     }
+
+    pos -= 150; // correct so that 0 is no steering
 
     // if (Serial2 > 0)
     // {
