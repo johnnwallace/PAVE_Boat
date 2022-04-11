@@ -75,6 +75,7 @@ void setup()
 void loop()
 {
     static int pos = 0;
+    static int throttle = 0;
     encoder.tick();
 
     // int newPos = encoder.getPosition();
@@ -87,13 +88,16 @@ void loop()
 
     if (Serial2.available())
     {
-        int in = Serial2.readString().toInt();
-        int pos = in / 1000;            // get first 3 digits
-        int throttle = in - pos * 1000; // get last 3 digits
-        Serial.println(String(pos) + ", " + String(throttle));
+        int in = Serial2.readStringUntil('\n').toInt();
+        //Serial.println(in);
+        pos = in / 1000;            // get first 3 digits
+        throttle = in - pos * 1000; // get last 3 digits
+        pos -= 150;
+        throttle -= 150;
     }
 
-    pos -= 150; // correct so that 0 is no steering
+    Serial.println(String(pos) + ", " + String(throttle));
+    // correct so that 0 is no steering
 
     // if (Serial2 > 0)
     // {
